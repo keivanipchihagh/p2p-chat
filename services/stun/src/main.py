@@ -9,7 +9,6 @@ from fastapi import Request, Response
 from config import (
     # API
     API_HOST,
-    API_PORT,
     API_LOG_LEVEL,
     API_RELOAD,
     API_WORKERS,
@@ -117,7 +116,7 @@ if __name__ == "__main__":
     uvicorn.run(
         app = "api:APP",
         host = API_HOST,
-        port = API_PORT,
+        port = 80,
         log_level = API_LOG_LEVEL,
         workers = API_WORKERS,
         reload = API_RELOAD,
