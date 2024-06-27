@@ -26,3 +26,14 @@ services:
     volumes:
       - ./volumes/redis:/var/lib/redis
       - ./volumes/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+  # STUN server
+  stun:
+    build:
+      context: services/stun/
+      dockerfile: Dockerfile
+    container_name: p2p-chat-stun-server
+    ports:
+      - ${STUN_API_PORT:-3478}:80
+    depends_on:
+      - redis
