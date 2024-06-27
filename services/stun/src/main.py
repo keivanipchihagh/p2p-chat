@@ -49,6 +49,13 @@ def readiness():
 )
 def liveness():
     # Liveness probe
+    try:
+        REDIS.ping()
+    except redis.exceptions.ConnectionError:
+        return Response(
+            content = {"status": "failed"},
+            status_code = HTTPStatus.SERVICE_UNAVAILABLE
+        )
     return {"status": "ok"}
 
 
