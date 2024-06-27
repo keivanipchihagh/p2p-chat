@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+
+  # Redis
+  redis:
+    image: redis:7.0-alpine
+    container_name: p2p-chat-redis
+    restart: always
+    # Configurations
+    command:
+      - '--save 20 1'
+      - '--loglevel warning'
+      - '--requirepass ${REDIS_PASSWORD}'
+      - '--maxmemory ${REDIS_MAX_MEMORY:-32M}'
+      - '--maxmemory-policy allkeys-lru'
+    # Healthcheck
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    # Data Persistence
+    volumes:
+      - ./volumes/redis:/var/lib/redis
+      - ./volumes/redis/redis.conf:/usr/local/etc/redis/redis.conf
