@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     # Run API server (blocking)
     uvicorn.run(
-        app = "api:APP",
+        app = "main:APP",
         host = API_HOST,
         port = 80,
         log_level = API_LOG_LEVEL,
